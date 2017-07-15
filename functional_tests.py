@@ -21,7 +21,7 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn('To-Do', header_text)
         # she is invited to enter a to-do item straight away
         inputbox = self.browser.find_element_by_id('id_new_item')
-        self.assertEqual(inputbox.get_attribute('placeholder'),'Enter a to-do item')
+        self.assertEqual(inputbox.get_attribute('placeholder'),'enter a to-do item')
         # she types "Buy peacock feathers" into a text box
         # her hobby is fly fishing lures
         inputbox.send_keys('Buy peacock feathers')
@@ -32,8 +32,10 @@ class NewVisitorTest(unittest.TestCase):
 
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertTrue(
-            any(row.text == '1: Buy peacock feathers' for row in rows)
+        self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
+        self.assertIn(
+            '2: Use peacock feathers to make a fly',
+            [row.text for row in rows]
         )
         # the page updates again and shows both items on her lists
 
@@ -44,6 +46,6 @@ class NewVisitorTest(unittest.TestCase):
         # she visits that url, her list is still There
 
         # Satisfied, she goes back to sleep
-
+        self.fail('finish the test')
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
